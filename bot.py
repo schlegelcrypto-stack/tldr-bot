@@ -3,6 +3,9 @@ TG TLDR Bot - Your chat's snarky, helpful summarizer
 """
 
 import asyncio
+import nest_asyncio
+nest_asyncio.apply()
+
 import os
 import logging
 from datetime import datetime
@@ -267,7 +270,7 @@ async def on_startup(app):
 # Main
 # ──────────────────────────────────────────────
 
-async def main():
+def main():
     token = os.environ["TELEGRAM_BOT_TOKEN"]
 
     app = Application.builder().token(token).post_init(on_startup).build()
@@ -283,8 +286,8 @@ async def main():
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, listen))
 
     logger.info("Bot is running...")
-    await app.run_polling(allowed_updates=Update.ALL_TYPES)
+    app.run_polling(allowed_updates=Update.ALL_TYPES)
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
