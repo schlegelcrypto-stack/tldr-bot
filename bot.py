@@ -1,3 +1,6 @@
+import asyncio
+asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
 """
 TG TLDR Bot - Your chat's snarky, helpful summarizer
 """
