@@ -1,13 +1,14 @@
-import asyncio
-asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-
 """
 TG TLDR Bot - Your chat's snarky, helpful summarizer
 """
 
+import asyncio
 import os
 import logging
 from datetime import datetime
+from dotenv import load_dotenv
+
+load_dotenv()
 from telegram import Update
 from telegram.ext import (
     Application,
@@ -266,7 +267,7 @@ async def on_startup(app):
 # Main
 # ──────────────────────────────────────────────
 
-def main():
+async def main():
     token = os.environ["TELEGRAM_BOT_TOKEN"]
 
     app = Application.builder().token(token).post_init(on_startup).build()
@@ -282,8 +283,8 @@ def main():
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, listen))
 
     logger.info("Bot is running...")
-    app.run_polling(allowed_updates=Update.ALL_TYPES)
+    await app.run_polling(allowed_updates=Update.ALL_TYPES)
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
