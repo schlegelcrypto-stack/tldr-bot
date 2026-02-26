@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 """
 AI layer — all Claude API calls live here.
 Swap the model or prompts without touching bot logic.
